@@ -13,7 +13,9 @@ const AddDocumentBtn = ({ userId, email }: CreateDocumentParams) => {
       if (room) {
         router.push(`/documents/${room.id}`);
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

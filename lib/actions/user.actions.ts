@@ -1,7 +1,6 @@
 "use server";
 
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
-import { error } from "console";
+import { clerkClient } from "@clerk/nextjs/server";
 import { parseStringify } from "../utils";
 import { liveblocks } from "../liveblocks";
 
@@ -22,7 +21,7 @@ export const getClerkUsers = async ({ userIds }: { userIds: string[] }) => {
       users.find((user) => user.email === email)
     );
     return parseStringify(sortedUsers);
-  } catch (err) {
+  } catch (error) {
     console.log(`Error fetching users: ${error}`);
   }
 };

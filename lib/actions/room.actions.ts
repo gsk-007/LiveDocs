@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { liveblocks } from "../liveblocks";
 import { revalidatePath } from "next/cache";
 import { getAccessType, parseStringify } from "../utils";
-import { RoomAccesses } from "@liveblocks/node";
+import { RoomAccesses, RoomData } from "@liveblocks/node";
 import { redirect } from "next/navigation";
 
 export const createDocument = async ({
@@ -74,13 +74,18 @@ export const updateDocument = async (roomId: string, title: string) => {
   }
 };
 
-export const getDocumens = async (email: string) => {
+export const getDocumens = async (email: string):Promise<{
+  nextPage: string | null;
+  nextCursor: string | null;
+  data: RoomData[];
+}> => {
   try {
     const rooms = await liveblocks.getRooms({ userId: email });
 
-    return parseStringify(rooms);
+    return parseStringify(rooms)
   } catch (err) {
     console.log(`Error happened while getting rooms: ${err}`);
+    return {nextPage:null, nextCursor:null, data: []}
   }
 };
 
